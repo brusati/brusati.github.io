@@ -407,9 +407,10 @@
             mat4.rotate(m1,m1,tiempo * Math.PI/2,vec3.fromValues(0,1,0))
             mat4.translate(m1,m1,[60,0,0]);
 
+            //inclinación
             mat4.rotate(m1,m1,Math.PI/8,vec3.fromValues(0,0,1))
 
-            //rotación sobre su eje
+            //rotación sobre su eje (el eje inclinado, no el inicial)
             mat4.rotate(m1,m1,tiempo * 5 * Math.PI,vec3.fromValues(0,1,0))
             
             setTransform(tierra,m1);
@@ -431,15 +432,9 @@
             // apollo
             m3=mat4.create();
             
-            //rotación alrededor del sol
-            mat4.rotate(m3,m3,tiempo * Math.PI/2,vec3.fromValues(0,1,0))
-            mat4.translate(m3,m3,[92,0,0]);
-            
-            //rotación alrededor de la tierra
-            mat4.translate(m3,m3,[-32,0,0]);
-            mat4.rotate(m3,m3,tiempo * 5 * Math.PI,vec3.fromValues(0,1,0))
-            mat4.translate(m3,m3,[32,0,0]);
-
+            //el apollo usa la misma matriz que la luna
+            //luego le aplico una traslación y una rotación para ponerla en la posición correcta
+            mat4.translate(m3,m2,[2,0,0]);
             mat4.rotate(m3,m3,Math.PI/2,vec3.fromValues(0,0,-1))
 
             setTransform(apollo,m3);    
@@ -453,7 +448,7 @@
 
             //rotación alrededor de la tierra
             mat4.translate(m4,m4,[-10,0,0]);
-            mat4.rotate(m4,m4,tiempo * 3 * Math.PI,vec3.fromValues(0,0,1))
+            mat4.rotate(m4,m4,tiempo * 10 * Math.PI,vec3.fromValues(0,0,1))
             mat4.translate(m4,m4,[10,0,0]);
             
             //ubico los paneles solares
