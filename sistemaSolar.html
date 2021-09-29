@@ -409,7 +409,7 @@
 
             //inclinación
 	    mat4.rotate(m1,m1,-tiempo * Math.PI/2,vec3.fromValues(0,1,0))
-            mat4.rotate(m1,m1,Math.PI/8,vec3.fromValues(0,0,1))
+            mat4.rotate(m1,m1,Math.PI/8,vec3.fromValues(1,0,0))
 
             //rotación sobre su eje (el eje inclinado, no el inicial)
             mat4.rotate(m1,m1,tiempo * 5 * Math.PI,vec3.fromValues(0,1,0))
