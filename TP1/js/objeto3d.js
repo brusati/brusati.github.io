@@ -1,29 +1,41 @@
 class Objeto3D{
 
-	constructor(buffer){
-		this.vertexBuffer = null;
-		this.indexBuffer = null;
+	constructor(mallaTriangulos){
+		this.malla = mallaTriangulos;
+		console.log(this.malla);
+
 		this.matrizModelado = mat4.create();
-		this.posicion = vec3.from_values(0, 0, 0);
-		this.rotacion = vec3.from_values(0, 0, 0);
-		this.escala = vec3.from_values(1, 1, 1);
+		this.normalMatrix = mat4.create();
+
+		this.posicion = vec3.fromValues(0, 0, 0);
+		this.rotX = 0;
+        this.rotY = 0;
+        this.rotZ = 0;
+		this.escala = vec3.fromValues(1, 1, 1);
+
 		this.hijos = [];
+		this.color = [0, 0, 1];
 	}
 
 	actualizarMatrizDeModelado(){
 		mat4.translate(this.matrizModelado, this.matrizModelado, this.posicion);
-		mat4.rotate(this.matrizModelado, this.matrizModelado, this.rotacion);
+		mat4.rotate(this.matrizModelado, this.matrizModelado, this.rotX, [1, 0, 0]);
+		mat4.rotate(this.matrizModelado, this.matrizModelado, this.rotY, [0, 1, 0]);
+		mat4.rotate(this.matrizModelado, this.matrizModelado, this.rotZ, [0, 0, 1]);
 		mat4.scale(this.matrizModelado, this.matrizModelado, this.escala);
 	}
 
-	dibujar(matPadre){
+	dibujar(matrizPadre){
 		var m = mat4.create();
-		actualizarMatrizDeModelado();
-		//concatenamos la matriz de transformación del padre con la del hijo
-		mat4.multiply(m, matPadre, this.matrizModelado)
 
-		if (this.vertexBuffer && this.indexBuffer){
-			//acá
+		this.actualizarMatrizDeModelado();
+
+		if (matrizPadre != null){
+			mat4.multiply(m, matrizPadre, this.matrizModelado)
+		}
+
+		if (this.malla){
+			dibujarMalla(this.malla);
 		}
 
 		for (var i = 0; i < this.hijos.length; i++){
@@ -31,9 +43,8 @@ class Objeto3D{
 		}
 	}
 
-	setGeometria(vertexBuffer, indexBuffer){
-		this.vertexBuffer = vertexBuffer;
-		this.indexBuffer = indexBuffer;		
+	setGeometria(mallaTriangulos){
+		this.malla = mallaTriangulos;	
 	}
 
 	agregarHijo(hijo){
@@ -45,7 +56,9 @@ class Objeto3D{
 	}
 
 	setRotacion(x, y, z){
-		this.rotacion = vec3.fromValues(x, y, z);
+		this.rotX = x;
+		this.rotY = y;
+		this.rotZ = z;
 	}
 
 	setEscala(x, y, z){
