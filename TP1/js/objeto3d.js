@@ -39,7 +39,7 @@ class Objeto3D{
 		}
 
 		for (var i = 0; i < this.hijos.length; i++){
-			hijos[i].dibujar(m)
+			this.hijos[i].dibujar(m)
 		}
 	}
 
