@@ -223,6 +223,7 @@
 			gl.uniform3fv(shaderProgram.lightingDirectionUniform, lightPosition);            
 
 			setMatrixUniforms();
+			escena.setRotacion(0, 10 * time, 0);
 			escena.dibujar(null);
 			
 		}
@@ -253,8 +254,9 @@
 			initShaders();
 			
 			escena = new Objeto3D(generarSuperficie(new Esfera(3), 100, 100));
-			escena.setRotacion(0, 3, 0);
-			escena.agregarHijo(new Objeto3D(generarSuperficie(new Plano(7, 7), 100, 100)));
+			var hijo = new Objeto3D(generarSuperficie(new Plano(7, 7), 100, 100));
+			hijo.setPosicion(30,30,30);
+			escena.agregarHijo(hijo);
 		
 			gl.clearColor(66.2, 0.2, 0.2, 1.0);
 			gl.clear(gl.COLOR_BUFFER_BIT);
